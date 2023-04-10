@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+        <record id="view_patient_form" model="ir.ui.view">
+            <field name="name">hms.patient.form</field>
+            <field name="model">hms.patient</field>
+            <field name="arch" type="xml">
+                <form string="Patient">
+                    <sheet>
+                        <group>
+                            <field name="first_name"/>
+                            <field name="last_name"/>
+                            <field name="birth_date"/>
+                            <field name="blood_type"/>
+                            <field name="cr_ratio"/>
+                            <field name="pcr"/>
+                        </group>
+                        <group>
+                            <field name="image" widget="image"/>
+                            <field name="address"/>
+                            <field name="history" widget="html"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--        create a new view to override the default view-->
+        <record id="view_patient_tree" model="ir.ui.view">
+            <field name="name">hms.patient.tree</field>
+            <field name="model">hms.patient</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="first_name"/>
+                    <field name="birth_date"/>
+                    <field name="blood_type"/>
+                    <field name="cr_ratio"/>
+                    <field name="pcr"/>
+                    <field name="image" widget="image" options="{'size': (50, 50)}"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Patient action -->
+        <record id="action_patient_list" model="ir.actions.act_window">
+            <field name="name">Patients</field>
+            <field name="res_model">hms.patient</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Patient menu item -->
+        <menuitem id="menu_patient_list" name="Patient List"
+                  action="action_patient_list"/>
+
+    </data>
+</odoo>
