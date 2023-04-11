@@ -1,5 +1,62 @@
+<!--<odoo>-->
+<!--    <data>-->
+<!--        <record id="view_patient_form" model="ir.ui.view">-->
+<!--            <field name="name">hms.patient.form</field>-->
+<!--            <field name="model">hms.patient</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <form string="Patient">-->
+<!--                    <sheet>-->
+<!--                        <group>-->
+<!--                            <field name="first_name"/>-->
+<!--                            <field name="last_name"/>-->
+<!--                            <field name="birth_date"/>-->
+<!--                            <field name="blood_type"/>-->
+<!--                            <field name="cr_ratio"/>-->
+<!--                            <field name="pcr"/>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="image" widget="image"/>-->
+<!--                            <field name="address"/>-->
+<!--                            <field name="history" widget="html"/>-->
+<!--                        </group>-->
+<!--                    </sheet>-->
+<!--                </form>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash;        create a new view to override the default view&ndash;&gt;-->
+<!--        <record id="view_patient_tree" model="ir.ui.view">-->
+<!--            <field name="name">hms.patient.tree</field>-->
+<!--            <field name="model">hms.patient</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <tree>-->
+<!--                    <field name="first_name"/>-->
+<!--                    <field name="birth_date"/>-->
+<!--                    <field name="blood_type"/>-->
+<!--                    <field name="cr_ratio"/>-->
+<!--                    <field name="pcr"/>-->
+<!--                    <field name="image" widget="image" options="{'size': (100, 100)}"/>-->
+<!--                </tree>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; Patient action &ndash;&gt;-->
+<!--        <record id="action_patient_list" model="ir.actions.act_window">-->
+<!--            <field name="name">Patients</field>-->
+<!--            <field name="res_model">hms.patient</field>-->
+<!--            <field name="view_mode">tree,form</field>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; Patient menu item &ndash;&gt;-->
+<!--        <menuitem id="menu_patient_list" name="Patient List"-->
+<!--                  action="action_patient_list"/>-->
+
+<!--    </data>-->
+<!--</odoo>-->
 <odoo>
     <data>
+
+        <!-- Patient form view -->
         <record id="view_patient_form" model="ir.ui.view">
             <field name="name">hms.patient.form</field>
             <field name="model">hms.patient</field>
@@ -10,32 +67,49 @@
                             <field name="first_name"/>
                             <field name="last_name"/>
                             <field name="birth_date"/>
-                            <field name="blood_type"/>
-                            <field name="cr_ratio"/>
-                            <field name="pcr"/>
+                            <field name="age"/>
                         </group>
                         <group>
                             <field name="image" widget="image"/>
-                            <field name="address"/>
-                            <field name="history" widget="html"/>
                         </group>
+                        <notebook>
+                            <page string="Medical Information">
+                                <group>
+
+                                    <field name="is_age_less_than_50" invisible="1"/>
+                                    <field name="history" attrs="{'invisible': [('is_age_less_than_50', '=', True)]}"/>
+                                    <field name="cr_ratio"/>
+                                    <field name="blood_type"/>
+                                    <field name="pcr"/>
+                                    <field name="state"/>
+                                    <field name="department_id"/>
+                                    <field name="doctor_id"/>
+
+                                </group>
+                            </page>
+                            <page string="Contact Information">
+                                <group>
+                                    <field name="address"/>
+                                </group>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
         </record>
 
-        <!--        create a new view to override the default view-->
+        <!-- Patient tree view -->
         <record id="view_patient_tree" model="ir.ui.view">
             <field name="name">hms.patient.tree</field>
             <field name="model">hms.patient</field>
             <field name="arch" type="xml">
                 <tree>
                     <field name="first_name"/>
-                    <field name="birth_date"/>
-                    <field name="blood_type"/>
-                    <field name="cr_ratio"/>
-                    <field name="pcr"/>
-                    <field name="image" widget="image" options="{'size': (50, 50)}"/>
+                    <field name="last_name"/>
+                    <field name="age"/>
+                    <field name="image" widget="image" options="{'size': (100, 100)}"/>
+                    <field name="department_capacity"/>
+
                 </tree>
             </field>
         </record>
@@ -46,10 +120,7 @@
             <field name="res_model">hms.patient</field>
             <field name="view_mode">tree,form</field>
         </record>
-
-        <!-- Patient menu item -->
-        <menuitem id="menu_patient_list" name="Patient List"
-                  action="action_patient_list"/>
+        <menuitem id="menu_patient_list" name="Patient List" action="action_patient_list"/>
 
     </data>
 </odoo>
